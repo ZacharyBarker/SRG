@@ -9,30 +9,41 @@
 CLEAN <- function(FlowFile, StageFile, HeaderSize){
      
      # Reads in the two files associate with the gauge
-     flow <- read.csv(FlowFile, header = F, skip = HeaderSize)
-     stage <- read.csv(StageFile, header = F, skip = HeaderSize)
+     flow <- read.xls(FlowFile, sheet = 1, perl = "C:/Perl/bin/perl.exe")
+     stage <- read.xls(StageFile, sheet = 1, perl = "C:/Perl/bin/perl.exe")
      
      # Drop 3rd column
-     flow$V3 <- NULL
-     stage$V3 <- NULL
+     flow[,3] <- NULL
+     stage[,3] <- NULL
      
-     # Drop last two rows which do not contain data
-     flow <- head(flow, -2)
-     stage <- head(stage, -2)
+     # Drop last row which do not contain data
+     flow <- head(flow, -1)
+     stage <- head(stage, -1)
+     
+     # Drop the header
+     flow <- tail(flow, -HeaderSize)
+     stage <- tail(stage, -HeaderSize)
      
      # Formats the time stamps to POSIX
-     flow$V1 <- strptime(flow$V1, format = "%m/%d/%Y %H:%M")
-     stage$V1 <- strptime(stage$V1, format = "%m/%d/%Y %H:%M")
+     flow[,1] <- as.character(flow[,1])
+     flow[,1] <- substr(flow[,1],1,nchar(flow[,1])-3)
+     flow[,1] <- as.POSIXct(flow[,1], format = "%Y-%m-%d %H:%M:%S")
+     stage[,1] <- as.character(stage[,1])
+     stage[,1] <- substr(stage[,1],1,nchar(stage[,1])-3)
+     stage[,1] <- as.POSIXct(stage[,1], format = "%Y-%m-%d %H:%M:%S")
+     
+     # Convert the flow and stage to numeric
+     flow[,2] <- as.numeric(gsub(",", "", flow[,2]))
+     stage[,2] <- as.numeric(gsub(",", "", stage[,2]))
+     
+     names(flow) <- c("DateTime", "Flow")
+     names(stage) <- c("DateTime", "Stage")
      
      # Merge flow and stage into one data frame
-     df <- merge(flow, stage, by= "V1", all = T)
+     df <- merge(flow, stage, by = "DateTime", all = T)
      
      # Rename the headers
      names(df) <- c("DateTime", "Flow", "Stage")
-     
-     # Convert the flow and stage to numerics
-     df$Flow <- as.numeric(as.character(df$Flow))
-     df$Stage <- as.numeric(as.character(df$Stage))
      
      return(df)
      
