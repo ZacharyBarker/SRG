@@ -9,14 +9,14 @@
 # Load necessary libraries
 library("gdata")                                                                # gdata must have perl library installed
 
-
+     
 # Set working directory to main RW Downstream impacts folder
 setwd("C:/Users/Zachary/Desktop/SRG/RW Downstream Impacts")
 
 
 # Load user defined functions
 source("Code/CleanAndFormat.R")
-
+source("Code/FlowDurationCurve.R")
 
 # Clean & format data
 setwd("Data/Raw Data/")
