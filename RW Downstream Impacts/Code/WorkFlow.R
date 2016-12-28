@@ -29,6 +29,12 @@ setwd("../..")
 
 
 # Flow duration curves
+FDC("Dresden", Dresden, 1000)
+FDC("Marseilles", Marseilles, 1000)
+FDC("Starved Rock", StarvedRock, 1000)
+FDC("Peoria", Peoria, 1000)
+FDC("La Grange", LaGrange, 1000)
+
 
 # Rating curve
 
