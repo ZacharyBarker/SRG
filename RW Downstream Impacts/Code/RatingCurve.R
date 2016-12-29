@@ -10,7 +10,11 @@ library("ggplot2")
 
 RATING_CURVE <- function(guage_name, df){
      
-     # Fit linear model
+     # Subset lower 50th percentile of stream flow
+     q <- quantile(df$Flow, .5, na.rm = T)
+     df <- df[df$Flow < q,]
+     
+     # Fit linear model to subset
      reg = lm(Stage ~ Flow, data = df)
      Slope_Intercept = c(as.numeric(reg$coefficients[2]),as.numeric(reg$coefficients[1]))
      
@@ -19,7 +23,13 @@ RATING_CURVE <- function(guage_name, df){
                    format(reg$coefficients[1], digits=3),sep ="")))
 
      # Define where the equation should display
-     yPos <- max(df$Flow, na.rm = T)*Slope_Intercept[1]+Slope_Intercept[2]
+     yPos1 <- max(df$Flow, na.rm = T)*Slope_Intercept[1]+Slope_Intercept[2]
+     yPos2 <- max(df$Stage, na.rm = T)
+     if (yPos1 < yPos2){
+          yPos <- yPos2
+     } else {
+          yPos <- yPos1
+     }
 
      # Construct graph
      curve <- ggplot(df) + geom_point(aes(Flow,Stage)) +
@@ -43,3 +53,5 @@ RATING_CURVE <- function(guage_name, df){
      return(Slope_Intercept)
      
 }
+
+# rc <- RATING_CURVE("la Grange", LaGrange)

@@ -30,6 +30,7 @@ FDC <- function(guage_name, df, consumption) {
      curve <- ggplot(dd) + geom_line(aes(x=Exceedence, y=value, colour=variable)) +
           scale_colour_manual(values=c("blue","red"), labels=c("Historical", "With Consumption"))+
           scale_y_log10()+
+          theme_bw()+
           xlab("Exceedence Probability (%)")+
           ylab("Flow  (CFS) - Log Scale")+
           ggtitle(paste(guage_name, "Flow Duration Curve"))+

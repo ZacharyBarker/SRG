@@ -26,6 +26,11 @@ Marseilles <- CLEAN("Marseilles_Flow.xls", "Marseilles_Stage.xls", 17)
 StarvedRock <- CLEAN("StarvedRock_Flow.xls", "StarvedRock_Stage.xls", 21)
 Peoria <- CLEAN("Peoria_Flow.xls", "Peoria_Stage.xls", 19)
 LaGrange <- CLEAN("LaGrange_Flow.xls", "LaGrange_Stage.xls", 21)
+LaGrange$Stage <- sapply(LaGrange$Stage, function(x){                           # Guage datum switched during the record
+     if(x<=100 && !is.na(x)){
+          x+413.5
+     }else{x}
+     })
 setwd("../..")
 
 
