@@ -29,14 +29,17 @@ setwd("../..")
 
 
 # Flow duration curves
-FDC("Dresden", Dresden, 1000)
-FDC("Marseilles", Marseilles, 1000)
-FDC("Starved Rock", StarvedRock, 1000)
-FDC("Peoria", Peoria, 1000)
-FDC("La Grange", LaGrange, 1000)
+Consumption <- 1000
+FDC("Dresden", Dresden, Consumption)
+FDC("Marseilles", Marseilles, Consumption)
+FDC("Starved Rock", StarvedRock, Consumption)
+FDC("Peoria", Peoria, Consumption)
+FDC("La Grange", LaGrange, Consumption)
 
 
 # Rating curve
+
+
 
 # T test
 
