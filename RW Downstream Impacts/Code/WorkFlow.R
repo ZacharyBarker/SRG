@@ -11,12 +11,13 @@ library("gdata")                                                                
 
      
 # Set working directory to main RW Downstream impacts folder
-setwd("C:/Users/Zachary/Desktop/SRG/RW Downstream Impacts")
+# setwd("C:/Users/Zachary/Desktop/SRG/RW Downstream Impacts")
 
 
 # Load user defined functions
 source("Code/CleanAndFormat.R")
 source("Code/FlowDurationCurve.R")
+source("Code/RatingCurve.R")
 
 # Clean & format data
 setwd("Data/Raw Data/")
@@ -38,7 +39,11 @@ FDC("La Grange", LaGrange, Consumption)
 
 
 # Rating curve
-
+RATING_CURVE("Dresden", Dresden)
+RATING_CURVE("Marseilles", Marseilles)
+RATING_CURVE("Starved Rock", StarvedRock)
+RATING_CURVE("Peoria", Peoria)
+RATING_CURVE("La Grange", LaGrange)
 
 
 # T test

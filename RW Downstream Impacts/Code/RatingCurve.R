@@ -11,16 +11,35 @@ library("ggplot2")
 RATING_CURVE <- function(guage_name, df){
      
      # Fit linear model
-     model = lm(Flow ~ Stage, data = df)
-     slope = model$coefficents[2]
-     intercept = model$coefficients[1]
+     reg = lm(Stage ~ Flow, data = df)
+     Slope_Intercept = c(as.numeric(reg$coefficients[2]),as.numeric(reg$coefficients[1]))
      
-     curve <- ggplot(df) + geom_point(aes(Stage,Flow))
-     
+     # Construct equation
+     eq <- as.character(as.expression(paste0("y = ",format(reg$coefficients[2], digits =2),"x + ",
+                   format(reg$coefficients[1], digits=3),sep ="")))
+
+     # Define where the equation should display
+     yPos <- max(df$Flow, na.rm = T)*Slope_Intercept[1]+Slope_Intercept[2]
+
+     # Construct graph
+     curve <- ggplot(df) + geom_point(aes(Flow,Stage)) +
+          geom_smooth(method=lm, aes(Flow,Stage))+
+          theme_bw()+
+          xlab("Flow  (CFS)")+
+          ylab("Water Surface Elevation (ft)")+
+          ggtitle(paste(guage_name, "Rating Curve"))+
+          geom_text(aes(x = 0, y = yPos, hjust = 0, vjust = 1, label = eq, parse = T), size = rel(5))+
+          theme(legend.justification=c(1,1),
+                legend.position=c(1,1),
+                legend.title=element_blank(),
+                legend.background = element_rect(fill="transparent"),
+                plot.title = element_text(size = rel(2)),
+                axis.text = element_text(size = rel(1.2)),
+                axis.title = element_text(size = rel(1.5)),
+                legend.text = element_text(size = rel(1.5)))
+
      print(curve)
 
-     return(model)
+     return(Slope_Intercept)
      
 }
-
-rc <- RATING_CURVE("Dresden", Dresden)
