@@ -16,9 +16,9 @@ setwd("C:/Users/Zachary/Desktop/SRG/RW Downstream Impacts")
 
 # Load user defined functions
 source("Code/CleanAndFormat.R")
+source("Code/Consumption.R")
 source("Code/FlowDurationCurve.R")
 source("Code/RatingCurve.R")
-source("Code/Consumption.R")
 
 
 # Load, clean & format data
