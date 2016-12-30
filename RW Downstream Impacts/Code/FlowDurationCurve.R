@@ -12,9 +12,6 @@ library("reshape2")
 
 FDC <- function(guage_name, df, consumption) {
      
-     # Subtract consumption from flow to create hypothetical flows
-     df$FLowConsumption <- df$Flow - consumption
-     
      # Sort flows
      df <- df[order(df$Flow),]
      df$Rank <- order(df$Flow)
@@ -30,7 +27,6 @@ FDC <- function(guage_name, df, consumption) {
      curve <- ggplot(dd) + geom_line(aes(x=Exceedence, y=value, colour=variable)) +
           scale_colour_manual(values=c("blue","red"), labels=c("Historical", "With Consumption"))+
           scale_y_log10()+
-          theme_bw()+
           xlab("Exceedence Probability (%)")+
           ylab("Flow  (CFS) - Log Scale")+
           ggtitle(paste(guage_name, "Flow Duration Curve"))+
