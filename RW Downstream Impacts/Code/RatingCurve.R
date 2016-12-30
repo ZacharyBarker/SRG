@@ -53,5 +53,3 @@ RATING_CURVE <- function(guage_name, df){
      return(Slope_Intercept)
      
 }
-
-# rc <- RATING_CURVE("la Grange", LaGrange)

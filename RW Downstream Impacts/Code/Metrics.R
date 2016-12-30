@@ -6,3 +6,13 @@
 #
 ################################################################################
 
+# T test
+T_TEST <- function(df){
+     
+}
+
+
+# Probability of failure
+P_FAIL <- function(df){
+     
+}

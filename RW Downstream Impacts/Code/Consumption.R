@@ -7,6 +7,18 @@
 #
 ################################################################################
 
-CONSUMPTION <- function(df, Consumption){
+CONSUMPTION <- function(df, Consumption, Scaler){
      
+     # Scale consumption patterns
+     for(i in 2:ncol(Consumption)){
+          Consumption[,i]<- Consumption[,i]*Scaler
+     }
+     
+     # Calculate consumption based on patterns
+     
+     
+     return(df)
 }
+
+# For testing
+df <- CONSUMPTION(Dresden, Patterns, Scaler)

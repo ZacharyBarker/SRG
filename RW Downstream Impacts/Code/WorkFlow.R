@@ -11,7 +11,7 @@ library("gdata")                                                                
 
      
 # Set working directory to main RW Downstream impacts folder
-# setwd("C:/Users/Zachary/Desktop/SRG/RW Downstream Impacts")
+setwd("C:/Users/Zachary/Desktop/SRG/RW Downstream Impacts")
 
 
 # Load user defined functions
@@ -19,7 +19,8 @@ source("Code/CleanAndFormat.R")
 source("Code/FlowDurationCurve.R")
 source("Code/RatingCurve.R")
 
-# Clean & format data
+
+# Load, clean & format data
 setwd("Data/Raw Data/")
 Dresden <- CLEAN("Dresden_Flow.xls", "Dresden_Stage.xls", 12)
 Marseilles <- CLEAN("Marseilles_Flow.xls", "Marseilles_Stage.xls", 17)
@@ -34,21 +35,29 @@ LaGrange$Stage <- sapply(LaGrange$Stage, function(x){                           
 setwd("../..")
 
 
+# Load consumption patterns
+Patterns <- read.csv("Data/ConsumptionPatterns.csv", header = T)
+Scaler <- 1000
+
+
+# Calculate consumption scenario
+Dresden <- CONSUMPTION(Dresden, ConsumptionPattern, Scaler)
+
+
 # Flow duration curves
-Consumption <- 1000
-FDC("Dresden", Dresden, Consumption)
-FDC("Marseilles", Marseilles, Consumption)
-FDC("Starved Rock", StarvedRock, Consumption)
-FDC("Peoria", Peoria, Consumption)
-FDC("La Grange", LaGrange, Consumption)
+Dresden <- FDC("Dresden", Dresden, Consumption)
+Marseilles <- FDC("Marseilles", Marseilles, Consumption)
+StarvedRock <- FDC("Starved Rock", StarvedRock, Consumption)
+Peoria <- FDC("Peoria", Peoria, Consumption)
+LaGrange <- FDC("La Grange", LaGrange, Consumption)
 
 
 # Rating curve
-RATING_CURVE("Dresden", Dresden)
-RATING_CURVE("Marseilles", Marseilles)
-RATING_CURVE("Starved Rock", StarvedRock)
-RATING_CURVE("Peoria", Peoria)
-RATING_CURVE("La Grange", LaGrange)
+si_Dresden <- RATING_CURVE("Dresden", Dresden)
+si_Marseilles <- RATING_CURVE("Marseilles", Marseilles)
+si_StarvedRock <- RATING_CURVE("Starved Rock", StarvedRock)
+si_Peoria <- RATING_CURVE("Peoria", Peoria)
+si_LaGrange <- RATING_CURVE("La Grange", LaGrange)
 
 
 # T test
