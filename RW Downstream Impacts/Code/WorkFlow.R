@@ -18,6 +18,7 @@ setwd("C:/Users/Zachary/Desktop/SRG/RW Downstream Impacts")
 source("Code/CleanAndFormat.R")
 source("Code/FlowDurationCurve.R")
 source("Code/RatingCurve.R")
+source("Code/Consumption.R")
 
 
 # Load, clean & format data
@@ -41,26 +42,27 @@ Scaler <- 1000
 
 
 # Calculate consumption scenario
-Dresden <- CONSUMPTION(Dresden, ConsumptionPattern, Scaler)
+Dresden <- CONSUMPTION(Dresden, Patterns, "Winter", Scaler)
+Marseilles <- CONSUMPTION(Marseilles, Patterns, "Winter", Scaler)
+StarvedRock <- CONSUMPTION(StarvedRock, Patterns, "Winter", Scaler)
+Peoria <- CONSUMPTION(Peoria, Patterns, "Winter", Scaler)
+LaGrange <- CONSUMPTION(LaGrange, Patterns, "Winter", Scaler)
 
 
 # Flow duration curves
-Dresden <- FDC("Dresden", Dresden, Consumption)
-Marseilles <- FDC("Marseilles", Marseilles, Consumption)
-StarvedRock <- FDC("Starved Rock", StarvedRock, Consumption)
-Peoria <- FDC("Peoria", Peoria, Consumption)
-LaGrange <- FDC("La Grange", LaGrange, Consumption)
+Dresden <- FDC("Dresden", Dresden)
+Marseilles <- FDC("Marseilles", Marseilles)
+StarvedRock <- FDC("Starved Rock", StarvedRock)
+Peoria <- FDC("Peoria", Peoria)
+LaGrange <- FDC("La Grange", LaGrange)
 
 
-# Rating curve
-si_Dresden <- RATING_CURVE("Dresden", Dresden)
-si_Marseilles <- RATING_CURVE("Marseilles", Marseilles)
-si_StarvedRock <- RATING_CURVE("Starved Rock", StarvedRock)
-si_Peoria <- RATING_CURVE("Peoria", Peoria)
-si_LaGrange <- RATING_CURVE("La Grange", LaGrange)
+# # Rating curve
+# si_Dresden <- RATING_CURVE("Dresden", Dresden)
+# si_Marseilles <- RATING_CURVE("Marseilles", Marseilles)
+# si_StarvedRock <- RATING_CURVE("Starved Rock", StarvedRock)
+# si_Peoria <- RATING_CURVE("Peoria", Peoria)
+# si_LaGrange <- RATING_CURVE("La Grange", LaGrange)
 
 
 # T test
-
-
-

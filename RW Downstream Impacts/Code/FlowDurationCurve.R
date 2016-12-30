@@ -10,7 +10,7 @@
 library("ggplot2")
 library("reshape2")
 
-FDC <- function(guage_name, df, consumption) {
+FDC <- function(guage_name, df) {
      
      # Sort flows
      df <- df[order(df$Flow),]
@@ -18,7 +18,7 @@ FDC <- function(guage_name, df, consumption) {
      df$Exceedence = 100-(100*(df$Rank/(length(df$Rank)+1)))
      
      # Subset to only graphing parameters
-     df2 <- df[,c(2,4,6)]
+     df2 <- df[,c(2,6,8)]
      
      # Reshape to plot
      dd = melt(df2, id=c("Exceedence"))
@@ -27,6 +27,7 @@ FDC <- function(guage_name, df, consumption) {
      curve <- ggplot(dd) + geom_line(aes(x=Exceedence, y=value, colour=variable)) +
           scale_colour_manual(values=c("blue","red"), labels=c("Historical", "With Consumption"))+
           scale_y_log10()+
+          theme_bw()+
           xlab("Exceedence Probability (%)")+
           ylab("Flow  (CFS) - Log Scale")+
           ggtitle(paste(guage_name, "Flow Duration Curve"))+
