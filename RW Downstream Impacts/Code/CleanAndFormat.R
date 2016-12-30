@@ -45,6 +45,9 @@ CLEAN <- function(FlowFile, StageFile, HeaderSize){
      # Rename the headers
      names(df) <- c("DateTime", "Flow", "Stage")
      
+     # Adds month column
+     df$Month <- months(df$DateTime)
+     
      return(df)
      
 }
