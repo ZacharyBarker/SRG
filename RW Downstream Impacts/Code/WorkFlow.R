@@ -58,11 +58,11 @@ LaGrange <- FDC("La Grange", LaGrange)
 
 
 # # Rating curve
-# si_Dresden <- RATING_CURVE("Dresden", Dresden)
-# si_Marseilles <- RATING_CURVE("Marseilles", Marseilles)
-# si_StarvedRock <- RATING_CURVE("Starved Rock", StarvedRock)
-# si_Peoria <- RATING_CURVE("Peoria", Peoria)
-# si_LaGrange <- RATING_CURVE("La Grange", LaGrange)
+si_Dresden <- RATING_CURVE("Dresden", Dresden)
+si_Marseilles <- RATING_CURVE("Marseilles", Marseilles)
+si_StarvedRock <- RATING_CURVE("Starved Rock", StarvedRock)
+si_Peoria <- RATING_CURVE("Peoria", Peoria)
+si_LaGrange <- RATING_CURVE("La Grange", LaGrange)
 
 
 # T test
