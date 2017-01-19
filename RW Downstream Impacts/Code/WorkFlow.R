@@ -42,7 +42,7 @@ Scaler <- 1000
 
 
 # Calculate consumption scenario
-Dresden <- CONSUMPTION(Dresden, Patterns, "Winter", Scaler)
+Dresden <- CONSUMPTION(Dresden, Patterns, "Summer", Scaler)
 Marseilles <- CONSUMPTION(Marseilles, Patterns, "Winter", Scaler)
 StarvedRock <- CONSUMPTION(StarvedRock, Patterns, "Winter", Scaler)
 Peoria <- CONSUMPTION(Peoria, Patterns, "Winter", Scaler)
@@ -57,12 +57,17 @@ Peoria <- FDC("Peoria", Peoria)
 LaGrange <- FDC("La Grange", LaGrange)
 
 
-# # Rating curve
-si_Dresden <- RATING_CURVE("Dresden", Dresden)
-si_Marseilles <- RATING_CURVE("Marseilles", Marseilles)
-si_StarvedRock <- RATING_CURVE("Starved Rock", StarvedRock)
-si_Peoria <- RATING_CURVE("Peoria", Peoria)
-si_LaGrange <- RATING_CURVE("La Grange", LaGrange)
+# Rating curve
+s_Dresden <- RATING_CURVE("Dresden", Dresden)
+s_Marseilles <- RATING_CURVE("Marseilles", Marseilles)
+s_StarvedRock <- RATING_CURVE("Starved Rock", StarvedRock)
+s_Peoria <- RATING_CURVE("Peoria", Peoria)
+s_LaGrange <- RATING_CURVE("La Grange", LaGrange)
 
 
 # T test
+t_Dresden <- T_TEST(Dresden)
+
+# Probability of failure
+pf_Dresden <- P_FAIL(Dresden, s_Dresden, 482.8)
+

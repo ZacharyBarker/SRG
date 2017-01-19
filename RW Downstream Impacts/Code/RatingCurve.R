@@ -49,7 +49,8 @@ RATING_CURVE <- function(guage_name, df){
                 legend.text = element_text(size = rel(1.5)))
 
      print(curve)
-
-     return(Slope_Intercept)
+     
+     slope <- Slope_Intercept[1]
+     return(slope)
      
 }
