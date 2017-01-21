@@ -12,15 +12,16 @@
 #
 ################################################################################
 
-CONSUMPTION <- function(df, Patterns, Type, Scaler){
+CONSUMPTION <- function(df, scenario, scaler){
+     # CONSUMPTION <- function(df, Patterns, Type, Scaler){
      
-     Patterns$Month <- as.character(Patterns$Month)
+     scenario$Month <- as.character(scenario$Month)
      
      # Calculate consumption based on patterns
-     df$Consumption <- Patterns[,Type][match(df$Month, Patterns$Month)]
+     df$Consumption <- scenario[,2][match(df$Month, scenario$Month)]
      
      # Scale consumption
-     df$Consumption <- df$Consumption*Scaler
+     df$Consumption <- df$Consumption*scaler
      
      # Subtract consumption from flow
      df$ConsumptionFlow <- df$Flow - df$Consumption

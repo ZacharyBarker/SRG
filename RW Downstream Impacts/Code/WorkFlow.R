@@ -42,42 +42,51 @@ Patterns <- read.csv("Data/ConsumptionPatterns.csv", header = T)
 Scaler <- 1000
 
 
-# Calculate consumption scenario
-Dresden <- CONSUMPTION(Dresden, Patterns, "Summer", Scaler)
-Marseilles <- CONSUMPTION(Marseilles, Patterns, "Winter", Scaler)
-StarvedRock <- CONSUMPTION(StarvedRock, Patterns, "Winter", Scaler)
-Peoria <- CONSUMPTION(Peoria, Patterns, "Winter", Scaler)
-LaGrange <- CONSUMPTION(LaGrange, Patterns, "Winter", Scaler)
+# Loop through consumption scenarios
+# for(i in 2:ncol(Patterns)){
+     i = 2
+     # Isolate a scenario
+     Scenario <- data.frame(Patterns$Month, Patterns[,i])
+     colnames(scenario) <- c("Month",colnames(Patterns)[i])
+     
+     
+     # Calculate consumption scenario
+     Dresden <- CONSUMPTION(Dresden, Scenario, Scaler)
+     Marseilles <- CONSUMPTION(Marseilles, Scenario, Scaler)
+     StarvedRock <- CONSUMPTION(StarvedRock, Scenario, Scaler)
+     Peoria <- CONSUMPTION(Peoria, Scenario, Scaler)
+     LaGrange <- CONSUMPTION(LaGrange, Scenario, Scaler)
+     
+     
+     # Flow duration curves
+     Dresden <- FDC("Dresden", Dresden)
+     Marseilles <- FDC("Marseilles", Marseilles)
+     StarvedRock <- FDC("Starved Rock", StarvedRock)
+     Peoria <- FDC("Peoria", Peoria)
+     LaGrange <- FDC("La Grange", LaGrange)
+     
+     
+     # Rating curve
+     s_Dresden <- RATING_CURVE("Dresden", Dresden)
+     s_Marseilles <- RATING_CURVE("Marseilles", Marseilles)
+     s_StarvedRock <- RATING_CURVE("Starved Rock", StarvedRock)
+     s_Peoria <- RATING_CURVE("Peoria", Peoria)
+     s_LaGrange <- RATING_CURVE("La Grange", LaGrange)
+     
+     
+     # T test
+     t_Dresden <- T_TEST(Dresden)
+     t_Marseilles <- T_TEST(Marseilles)
+     t_StarvedRock <- T_TEST(StarvedRock)
+     t_Peoria <- T_TEST(Peoria)
+     t_LaGrange <- T_TEST(LaGrange)
+     
+     
+     # Probability of failure
+     pf_Dresden <- P_FAIL(Dresden, s_Dresden, 482.8)
+     pf_Marseilles <- P_FAIL(Marseilles, s_Marseilles, 458.5)
+     pf_StarvedRock <- P_FAIL(StarvedRock, s_StarvedRock, 440.3)
+     pf_Peoria <- P_FAIL(Peoria, s_Peoria, 430.0)
+     pf_LaGrange <- P_FAIL(LaGrange, s_LaGrange, 419.6)
 
-
-# Flow duration curves
-Dresden <- FDC("Dresden", Dresden)
-Marseilles <- FDC("Marseilles", Marseilles)
-StarvedRock <- FDC("Starved Rock", StarvedRock)
-Peoria <- FDC("Peoria", Peoria)
-LaGrange <- FDC("La Grange", LaGrange)
-
-
-# Rating curve
-s_Dresden <- RATING_CURVE("Dresden", Dresden)
-s_Marseilles <- RATING_CURVE("Marseilles", Marseilles)
-s_StarvedRock <- RATING_CURVE("Starved Rock", StarvedRock)
-s_Peoria <- RATING_CURVE("Peoria", Peoria)
-s_LaGrange <- RATING_CURVE("La Grange", LaGrange)
-
-
-# T test
-t_Dresden <- T_TEST(Dresden)
-t_Marseilles <- T_TEST(Marseilles)
-t_StarvedRock <- T_TEST(StarvedRock)
-t_Peoria <- T_TEST(Peoria)
-t_LaGrange <- T_TEST(LaGrange)
-
-
-# Probability of failure
-pf_Dresden <- P_FAIL(Dresden, s_Dresden, 482.8)
-pf_Marseilles <- P_FAIL(Marseilles, s_Marseilles, 458.5)
-pf_StarvedRock <- P_FAIL(StarvedRock, s_StarvedRock, 440.3)
-pf_Peoria <- P_FAIL(Peoria, s_Peoria, 430.0)
-pf_LaGrange <- P_FAIL(LaGrange, s_LaGrange, 419.6)
-
+# }
