@@ -67,7 +67,16 @@ s_LaGrange <- RATING_CURVE("La Grange", LaGrange)
 
 # T test
 t_Dresden <- T_TEST(Dresden)
+t_Marseilles <- T_TEST(Marseilles)
+t_StarvedRock <- T_TEST(StarvedRock)
+t_Peoria <- T_TEST(Peoria)
+t_LaGrange <- T_TEST(LaGrange)
+
 
 # Probability of failure
 pf_Dresden <- P_FAIL(Dresden, s_Dresden, 482.8)
+pf_Marseilles <- P_FAIL(Marseilles, s_Marseilles, 458.5)
+pf_StarvedRock <- P_FAIL(StarvedRock, s_StarvedRock, 440.3)
+pf_Peoria <- P_FAIL(Peoria, s_Peoria, 430.0)
+pf_LaGrange <- P_FAIL(LaGrange, s_LaGrange, 419.6)
 
