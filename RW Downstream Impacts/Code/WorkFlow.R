@@ -22,6 +22,13 @@ source("Code/RatingCurve.R")
 source("Code/Metrics.R")
 
 
+# Initialize metrics output dataframes
+Gauge <- c("Dresden", "Marseilles", "StarvedRock", "Peoria", "LaGrange")
+Station <- c(271, 245, 231, 158, 80)
+tTest <- data.frame(Gauge, Station)
+pFail <- data.frame(Gauge, Station)
+
+
 # Load, clean & format data
 setwd("Data/Raw Data/")
 Dresden <- CLEAN("Dresden_Flow.xls", "Dresden_Stage.xls", 12)
@@ -47,7 +54,7 @@ Scaler <- 1000
      i = 2
      # Isolate a scenario
      Scenario <- data.frame(Patterns$Month, Patterns[,i])
-     colnames(scenario) <- c("Month",colnames(Patterns)[i])
+     colnames(Scenario) <- c("Month",colnames(Patterns)[i])
      
      
      # Calculate consumption scenario
@@ -88,5 +95,10 @@ Scaler <- 1000
      pf_StarvedRock <- P_FAIL(StarvedRock, s_StarvedRock, 440.3)
      pf_Peoria <- P_FAIL(Peoria, s_Peoria, 430.0)
      pf_LaGrange <- P_FAIL(LaGrange, s_LaGrange, 419.6)
+     
+     
+     # Metrics output dataframes
+     tTest[,colnames(Patterns)[i]] <- c(t_Dresden,t_Marseilles,t_StarvedRock,t_Peoria,t_LaGrange)
+     pFail[,colnames(Patterns)[i]] <- c(pf_Dresden,pf_Marseilles,pf_StarvedRock,pf_Peoria,pf_LaGrange)
 
 # }
