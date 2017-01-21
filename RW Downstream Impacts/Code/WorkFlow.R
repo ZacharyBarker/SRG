@@ -19,6 +19,7 @@ source("Code/CleanAndFormat.R")
 source("Code/Consumption.R")
 source("Code/FlowDurationCurve.R")
 source("Code/RatingCurve.R")
+source("Code/Metrics.R")
 
 
 # Load, clean & format data
