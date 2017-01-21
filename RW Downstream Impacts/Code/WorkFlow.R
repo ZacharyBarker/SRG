@@ -73,14 +73,6 @@ for(i in 2:ncol(Patterns)){
      LaGrange <- CONSUMPTION(LaGrange, Scenario, Scaler)
      
      
-     # Flow duration curves
-     Dresden <- FDC("Dresden", Dresden)
-     Marseilles <- FDC("Marseilles", Marseilles)
-     StarvedRock <- FDC("Starved Rock", StarvedRock)
-     Peoria <- FDC("Peoria", Peoria)
-     LaGrange <- FDC("La Grange", LaGrange)
-     
-     
      # T test
      t_Dresden <- T_TEST(Dresden)
      t_Marseilles <- T_TEST(Marseilles)
@@ -102,3 +94,11 @@ for(i in 2:ncol(Patterns)){
      pFail[,colnames(Patterns)[i]] <- c(pf_Dresden,pf_Marseilles,pf_StarvedRock,pf_Peoria,pf_LaGrange)
 
 }
+
+
+# Plot flow duration curves
+FDC("Dresden", Dresden)
+FDC("Marseilles", Marseilles)
+FDC("Starved Rock", StarvedRock)
+FDC("Peoria", Peoria)
+FDC("La Grange", LaGrange)

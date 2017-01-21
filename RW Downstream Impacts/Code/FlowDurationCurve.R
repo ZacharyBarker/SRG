@@ -30,8 +30,6 @@ FDC <- function(guage_name, df) {
      dd <- data.frame(flow, exceedence)
      
      # Plot
-     # curve <- ggplot(df)+geom_line(aes(x = ConsumptionExceedence, y = ConsumptionFlow))+geom_line(aes(x = Exceedence, y = Flow))
-     
      curve <- ggplot(dd) + geom_line(aes(x=value.1, y=value, colour=variable)) +
           scale_colour_manual(values=c("blue","red"), labels=c("Historical", "With Consumption"))+
           scale_y_log10()+
@@ -40,7 +38,7 @@ FDC <- function(guage_name, df) {
           ylab("Flow  (CFS) - Log Scale")+
           ggtitle(paste(guage_name, "Flow Duration Curve"))+
           theme(legend.justification=c(1,1), 
-                legend.position=c(1,1), 
+                legend.position=c(1,1),
                 legend.title=element_blank(), 
                 legend.background = element_rect(fill="transparent"),
                 plot.title = element_text(size = rel(2)),
@@ -49,6 +47,5 @@ FDC <- function(guage_name, df) {
                 legend.text = element_text(size = rel(1.5)))
      
      print(curve)
-     
-     return(df)
+
 }
