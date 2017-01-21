@@ -44,14 +44,22 @@ LaGrange$Stage <- sapply(LaGrange$Stage, function(x){                           
 setwd("../..")
 
 
+# Rating curve
+s_Dresden <- RATING_CURVE("Dresden", Dresden)
+s_Marseilles <- RATING_CURVE("Marseilles", Marseilles)
+s_StarvedRock <- RATING_CURVE("Starved Rock", StarvedRock)
+s_Peoria <- RATING_CURVE("Peoria", Peoria)
+s_LaGrange <- RATING_CURVE("La Grange", LaGrange)
+
+
 # Load consumption patterns
 Patterns <- read.csv("Data/ConsumptionPatterns.csv", header = T)
 Scaler <- 1000
 
 
 # Loop through consumption scenarios
-# for(i in 2:ncol(Patterns)){
-     i = 2
+for(i in 2:ncol(Patterns)){
+
      # Isolate a scenario
      Scenario <- data.frame(Patterns$Month, Patterns[,i])
      colnames(Scenario) <- c("Month",colnames(Patterns)[i])
@@ -71,14 +79,6 @@ Scaler <- 1000
      StarvedRock <- FDC("Starved Rock", StarvedRock)
      Peoria <- FDC("Peoria", Peoria)
      LaGrange <- FDC("La Grange", LaGrange)
-     
-     
-     # Rating curve
-     s_Dresden <- RATING_CURVE("Dresden", Dresden)
-     s_Marseilles <- RATING_CURVE("Marseilles", Marseilles)
-     s_StarvedRock <- RATING_CURVE("Starved Rock", StarvedRock)
-     s_Peoria <- RATING_CURVE("Peoria", Peoria)
-     s_LaGrange <- RATING_CURVE("La Grange", LaGrange)
      
      
      # T test
@@ -101,4 +101,4 @@ Scaler <- 1000
      tTest[,colnames(Patterns)[i]] <- c(t_Dresden,t_Marseilles,t_StarvedRock,t_Peoria,t_LaGrange)
      pFail[,colnames(Patterns)[i]] <- c(pf_Dresden,pf_Marseilles,pf_StarvedRock,pf_Peoria,pf_LaGrange)
 
-# }
+}
