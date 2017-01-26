@@ -20,6 +20,6 @@ P_FAIL <- function(df, slope, threshold, name){
      heading1 <- paste0(name, "Flow")
      heading2 <- paste0(name, "Stage")
      df[,heading2] <- df$Stage-(df[,heading1]*slope)
-     pFailOut <- (length(which(df$ConsumptionStage<threshold))/length(df$Stage))*100
+     pFailOut <- (length(which(df[,heading2]<threshold))/length(df$Stage))*100
      return(pFailOut)
 }
