@@ -16,15 +16,15 @@ FDC <- function(guage_name, df) {
      scenarios <- colnames(df)[grepl("Flow", names(df))]
      
      # Apply to each flow scenario
-     for(i in 1:length(scenarios)){
+     for(i in scenarios){
           
           # Headings
           heading1 <- paste0(i,"Rank")
           heading2 <- paste0(i, "Exceedence")
      
           # Sort flows
-          df <- df[order(df$Flow),]
-          df[,heading1] <- order(df$Flow)
+          df <- df[order(df[,i]),]
+          df[,heading1] <- order(df[,i])
           df[,heading2] = 100-(100*(df[,heading1]/(length(df[,heading1])+1)))
           
      }
@@ -56,7 +56,5 @@ FDC <- function(guage_name, df) {
                 legend.text = element_text(size = rel(1.5)))
      
      print(curve)
-     
-     return(dd)
 
 }
