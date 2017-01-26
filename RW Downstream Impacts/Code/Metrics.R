@@ -23,3 +23,6 @@ P_FAIL <- function(df, slope, threshold, name){
      pFailOut <- (length(which(df[,heading2]<threshold))/length(df$Stage))*100
      return(pFailOut)
 }
+
+
+# Plot 

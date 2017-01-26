@@ -54,7 +54,8 @@ s_LaGrange <- RATING_CURVE("La Grange", LaGrange)
 
 # Load consumption patterns
 Patterns <- read.csv("Data/ConsumptionPatterns.csv", header = T)
-Scaler <- 1000
+Scaler <- 200
+PLOT_PATTERNS(Patterns)
 
 
 # Loop through consumption scenarios
