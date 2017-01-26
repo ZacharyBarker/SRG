@@ -12,17 +12,26 @@ library("reshape2")
 
 FDC <- function(guage_name, df) {
      
-     # Sort flows
-     df <- df[order(df$Flow),]
-     df$Rank <- order(df$Flow)
-     df$Exceedence = 100-(100*(df$Rank/(length(df$Rank)+1)))
-     df <- df[order(df$ConsumptionFlow),]
-     df$ConsumptionRank <- order(df$ConsumptionFlow)
-     df$ConsumptionExceedence = 100-(100*(df$ConsumptionRank/(length(df$ConsumptionRank)+1)))
+     # Get list of scenarios to plot
+     scenarios <- colnames(df)[grepl("Flow", names(df))]
+     
+     # Apply to each flow scenario
+     for(i in 1:length(scenarios)){
+          
+          # Headings
+          heading1 <- paste0(i,"Rank")
+          heading2 <- paste0(i, "Exceedence")
+     
+          # Sort flows
+          df <- df[order(df$Flow),]
+          df[,heading1] <- order(df$Flow)
+          df[,heading2] = 100-(100*(df[,heading1]/(length(df[,heading1])+1)))
+          
+     }
      
      # Subset to only graphing parameters
-     exceedence <- df[,c(8,10)]
-     flow <- df[,c(2,6)]
+     exceedence <- df[grepl("Exceedence", names(df))]
+     flow <- df[scenarios]
      
      # Reshape to plot
      exceedence <- melt(exceedence)
@@ -31,7 +40,7 @@ FDC <- function(guage_name, df) {
      
      # Plot
      curve <- ggplot(dd) + geom_line(aes(x=value.1, y=value, colour=variable)) +
-          scale_colour_manual(values=c("blue","red"), labels=c("Historical", "With Consumption"))+
+          # scale_colour_manual(values=c("blue","red"), labels=c("Historical", "With Consumption"))+
           scale_y_log10()+
           theme_bw()+
           xlab("Exceedence Probability (%)")+
@@ -47,5 +56,7 @@ FDC <- function(guage_name, df) {
                 legend.text = element_text(size = rel(1.5)))
      
      print(curve)
+     
+     return(dd)
 
 }

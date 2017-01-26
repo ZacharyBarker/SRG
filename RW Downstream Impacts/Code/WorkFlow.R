@@ -98,8 +98,8 @@ for(i in 2:ncol(Patterns)){
 
 
 # Plot flow duration curves
-# FDC("Dresden", Dresden)
-# FDC("Marseilles", Marseilles)
-# FDC("Starved Rock", StarvedRock)
-# FDC("Peoria", Peoria)
-# FDC("La Grange", LaGrange)
+FDC("Dresden", Dresden)
+FDC("Marseilles", Marseilles)
+FDC("Starved Rock", StarvedRock)
+FDC("Peoria", Peoria)
+FDC("La Grange", LaGrange)
