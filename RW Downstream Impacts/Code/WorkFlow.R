@@ -20,6 +20,7 @@ source("Code/Consumption.R")
 source("Code/FlowDurationCurve.R")
 source("Code/RatingCurve.R")
 source("Code/Metrics.R")
+source("Code/Patterns.R")
 
 
 # Initialize metrics output dataframes
