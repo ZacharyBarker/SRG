@@ -91,7 +91,6 @@ for(i in 2:ncol(Patterns)){
      pf_Peoria <- P_FAIL(Peoria, s_Peoria, 430.0, Name)
      pf_LaGrange <- P_FAIL(LaGrange, s_LaGrange, 419.6, Name)
      
-     
      # Metrics output dataframes
      tTest[,colnames(Patterns)[i]] <- c(t_Dresden,t_Marseilles,t_StarvedRock,t_Peoria,t_LaGrange)
      pFail[,colnames(Patterns)[i]] <- c(pf_Dresden,pf_Marseilles,pf_StarvedRock,pf_Peoria,pf_LaGrange)
