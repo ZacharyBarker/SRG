@@ -28,7 +28,9 @@ P_FAIL <- function(df, slope, threshold, name){
 
 # Total revenue lost for each scenario
 COST <- function(df, name) {
-     
+     heading1 <- paste0(name, "Cost")
+     total <- sum(df[,heading1], na.rm = T)
+     return(total/(df[,heading1]/365.25))
 }
 
 # Plot 

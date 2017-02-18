@@ -28,6 +28,7 @@ Gauge <- c("Dresden", "Marseilles", "StarvedRock", "Peoria", "LaGrange")
 Station <- c(271, 245, 231, 158, 80)
 tTest <- data.frame(Gauge, Station)
 pFail <- data.frame(Gauge, Station)
+rLost <- data.frame(Gauge, Station)
 
 
 # Load, clean & format data
@@ -96,10 +97,18 @@ for(i in 2:ncol(Patterns)){
      pf_LaGrange <- P_FAIL(LaGrange, s_LaGrange, 419.6, Name)
      
      
+     # Revenue lost
+     c_Dresden <- COST(Dresden, Name)
+     c_Marseilles <- COST(Marseilles, Name)
+     c_StarvedRock <- COST(StarvedRock, Name)
+     c_Peoria <- COST(Peoria, Name)
+     c_LaGrange <- COST(LaGrange, Name)
+     
+     
      # Metrics output dataframes
      tTest[,colnames(Patterns)[i]] <- c(t_Dresden,t_Marseilles,t_StarvedRock,t_Peoria,t_LaGrange)
      pFail[,colnames(Patterns)[i]] <- c(pf_Dresden,pf_Marseilles,pf_StarvedRock,pf_Peoria,pf_LaGrange)
-
+     rLost[,colnames(Patterns)[i]] <- c(c_Dresden,c_Marseilles,c_StarvedRock,c_Peoria,c_LaGrange)
 }
 
 
