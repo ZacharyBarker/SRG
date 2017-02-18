@@ -19,7 +19,6 @@ T_TEST <- function(df, name){
 P_FAIL <- function(df, slope, threshold, name){
      heading1 <- paste0(name, "Consumption")
      heading2 <- paste0(name, "Stage")
-     df[,heading2] <- df$Stage-(df[,heading1]*slope)
      stageWOna <- df[,heading2][!is.na(df[,heading2])]
      countFail <- length(which(stageWOna<threshold))
      countLength <- length(stageWOna)

@@ -12,7 +12,7 @@
 #
 ################################################################################
 
-CONSUMPTION <- function(df, scenario, scaler){
+CONSUMPTION <- function(df, scenario, scaler, slope){
      
      # Format month as character
      scenario$Month <- as.character(scenario$Month)
@@ -20,6 +20,7 @@ CONSUMPTION <- function(df, scenario, scaler){
      # Heading titles
      heading1 <- paste0(colnames(scenario)[2],"Consumption")
      heading2 <- paste0(colnames(scenario)[2],"Flow")
+     heading3 <- paste0(colnames(scenario)[2],"Stage")
      
      # Calculate consumption based on patterns
      df[,heading1] <- scenario[,2][match(df$Month, scenario$Month)]
@@ -29,6 +30,9 @@ CONSUMPTION <- function(df, scenario, scaler){
      
      # Subtract consumption from flow
      df[,heading2] <- df$Flow - df[,heading1]
+     
+     # Calculate new stage
+     df[,heading3] <- df$Stage-(df[,heading1]*slope)
      
      return(df)
 }

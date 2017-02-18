@@ -69,11 +69,11 @@ for(i in 2:ncol(Patterns)){
      
      
      # Calculate consumption scenario
-     Dresden <- CONSUMPTION(Dresden, Scenario, Scaler)
-     Marseilles <- CONSUMPTION(Marseilles, Scenario, Scaler)
-     StarvedRock <- CONSUMPTION(StarvedRock, Scenario, Scaler)
-     Peoria <- CONSUMPTION(Peoria, Scenario, Scaler)
-     LaGrange <- CONSUMPTION(LaGrange, Scenario, Scaler)
+     Dresden <- CONSUMPTION(Dresden, Scenario, Scaler, s_Dresden)
+     Marseilles <- CONSUMPTION(Marseilles, Scenario, Scaler, s_Marseilles)
+     StarvedRock <- CONSUMPTION(StarvedRock, Scenario, Scaler, s_StarvedRock)
+     Peoria <- CONSUMPTION(Peoria, Scenario, Scaler, s_Peoria)
+     LaGrange <- CONSUMPTION(LaGrange, Scenario, Scaler, s_LaGrange)
      
      
      # T test
