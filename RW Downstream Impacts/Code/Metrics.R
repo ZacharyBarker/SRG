@@ -26,5 +26,9 @@ P_FAIL <- function(df, slope, threshold, name){
      return(pFailOut)
 }
 
+# Total revenue lost for each scenario
+COST <- function(df, name) {
+     
+}
 
 # Plot 
