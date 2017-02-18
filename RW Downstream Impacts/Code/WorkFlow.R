@@ -72,7 +72,11 @@ for(Scaler in Scalers) {
      
           # Isolate a scenario
           Scenario <- data.frame(Patterns$Month, Patterns[,i])
-          Name <- paste0(colnames(Patterns)[i],Scaler)
+          if(colnames(Patterns)[i] == "Current"){
+               Name <- "Current"
+          } else {
+               Name <- paste0(colnames(Patterns)[i],Scaler)
+          }
           colnames(Scenario) <- c("Month", Name)
           
           
