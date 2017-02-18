@@ -11,7 +11,7 @@ library("gdata")                                                                
 
      
 # Set working directory to main RW Downstream impacts folder
-setwd("C:/Users/Zachary/Desktop/SRG/RW Downstream Impacts")
+# setwd("C:/Users/Zachary/Desktop/SRG/RW Downstream Impacts")
 
 
 # Load user defined functions
@@ -56,59 +56,63 @@ s_LaGrange <- RATING_CURVE("La Grange", LaGrange)
 
 # Load consumption patterns
 Patterns <- read.csv("Data/ConsumptionPatterns.csv", header = T)
-Scaler <- 200
+Scalers <- c(200, 500, 1000, 1500, 2000)
+# Scalers <- c(200)
 PLOT_PATTERNS(Patterns)
 
 ## TEMPORARY VARIABLE INITALIZATION
 I = 5
 price = 2000
 
+# Loop through consumption scaler
+for(Scaler in Scalers) {
 
-# Loop through consumption scenarios
-for(i in 2:ncol(Patterns)){
-
-     # Isolate a scenario
-     Scenario <- data.frame(Patterns$Month, Patterns[,i])
-     Name <- colnames(Patterns)[i]
-     colnames(Scenario) <- c("Month", Name)
+     # Loop through consumption scenarios
+     for(i in 2:ncol(Patterns)){
      
-     
-     # Calculate consumption scenario
-     Dresden <- CONSUMPTION(Dresden, Scenario, Scaler, s_Dresden, 482.8, I, price)
-     Marseilles <- CONSUMPTION(Marseilles, Scenario, Scaler, s_Marseilles, 458.5, I, price)
-     StarvedRock <- CONSUMPTION(StarvedRock, Scenario, Scaler, s_StarvedRock, 440.3, I, price)
-     Peoria <- CONSUMPTION(Peoria, Scenario, Scaler, s_Peoria, 430.0, I, price)
-     LaGrange <- CONSUMPTION(LaGrange, Scenario, Scaler, s_LaGrange, 419.6, I, price)
-     
-     
-     # T test
-     t_Dresden <- T_TEST(Dresden, Name)
-     t_Marseilles <- T_TEST(Marseilles, Name)
-     t_StarvedRock <- T_TEST(StarvedRock, Name)
-     t_Peoria <- T_TEST(Peoria, Name)
-     t_LaGrange <- T_TEST(LaGrange, Name)
-     
-     
-     # Probability of failure
-     pf_Dresden <- P_FAIL(Dresden, s_Dresden, 482.8, Name)
-     pf_Marseilles <- P_FAIL(Marseilles, s_Marseilles, 458.5, Name)
-     pf_StarvedRock <- P_FAIL(StarvedRock, s_StarvedRock, 440.3, Name)
-     pf_Peoria <- P_FAIL(Peoria, s_Peoria, 430.0, Name)
-     pf_LaGrange <- P_FAIL(LaGrange, s_LaGrange, 419.6, Name)
-     
-     
-     # Revenue lost
-     c_Dresden <- COST(Dresden, Name)
-     c_Marseilles <- COST(Marseilles, Name)
-     c_StarvedRock <- COST(StarvedRock, Name)
-     c_Peoria <- COST(Peoria, Name)
-     c_LaGrange <- COST(LaGrange, Name)
-     
-     
-     # Metrics output dataframes
-     tTest[,colnames(Patterns)[i]] <- c(t_Dresden,t_Marseilles,t_StarvedRock,t_Peoria,t_LaGrange)
-     pFail[,colnames(Patterns)[i]] <- c(pf_Dresden,pf_Marseilles,pf_StarvedRock,pf_Peoria,pf_LaGrange)
-     rLost[,colnames(Patterns)[i]] <- c(c_Dresden,c_Marseilles,c_StarvedRock,c_Peoria,c_LaGrange)
+          # Isolate a scenario
+          Scenario <- data.frame(Patterns$Month, Patterns[,i])
+          Name <- paste0(colnames(Patterns)[i],Scaler)
+          colnames(Scenario) <- c("Month", Name)
+          
+          
+          # Calculate consumption scenario
+          Dresden <- CONSUMPTION(Dresden, Scenario, Scaler, s_Dresden, 482.8, I, price)
+          Marseilles <- CONSUMPTION(Marseilles, Scenario, Scaler, s_Marseilles, 458.5, I, price)
+          StarvedRock <- CONSUMPTION(StarvedRock, Scenario, Scaler, s_StarvedRock, 440.3, I, price)
+          Peoria <- CONSUMPTION(Peoria, Scenario, Scaler, s_Peoria, 430.0, I, price)
+          LaGrange <- CONSUMPTION(LaGrange, Scenario, Scaler, s_LaGrange, 419.6, I, price)
+          
+          
+          # T test
+          t_Dresden <- T_TEST(Dresden, Name)
+          t_Marseilles <- T_TEST(Marseilles, Name)
+          t_StarvedRock <- T_TEST(StarvedRock, Name)
+          t_Peoria <- T_TEST(Peoria, Name)
+          t_LaGrange <- T_TEST(LaGrange, Name)
+          
+          
+          # Probability of failure
+          pf_Dresden <- P_FAIL(Dresden, s_Dresden, 482.8, Name)
+          pf_Marseilles <- P_FAIL(Marseilles, s_Marseilles, 458.5, Name)
+          pf_StarvedRock <- P_FAIL(StarvedRock, s_StarvedRock, 440.3, Name)
+          pf_Peoria <- P_FAIL(Peoria, s_Peoria, 430.0, Name)
+          pf_LaGrange <- P_FAIL(LaGrange, s_LaGrange, 419.6, Name)
+          
+          
+          # Revenue lost
+          c_Dresden <- COST(Dresden, Name)
+          c_Marseilles <- COST(Marseilles, Name)
+          c_StarvedRock <- COST(StarvedRock, Name)
+          c_Peoria <- COST(Peoria, Name)
+          c_LaGrange <- COST(LaGrange, Name)
+          
+          
+          # Metrics output dataframes
+          tTest[,Name] <- c(t_Dresden,t_Marseilles,t_StarvedRock,t_Peoria,t_LaGrange)
+          pFail[,Name] <- c(pf_Dresden,pf_Marseilles,pf_StarvedRock,pf_Peoria,pf_LaGrange)
+          rLost[,Name] <- c(c_Dresden,c_Marseilles,c_StarvedRock,c_Peoria,c_LaGrange)
+     }
 }
 
 
