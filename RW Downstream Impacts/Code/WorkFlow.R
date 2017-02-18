@@ -58,6 +58,10 @@ Patterns <- read.csv("Data/ConsumptionPatterns.csv", header = T)
 Scaler <- 200
 PLOT_PATTERNS(Patterns)
 
+## TEMPORARY VARIABLE INITALIZATION
+I = 5
+price = 2000
+
 
 # Loop through consumption scenarios
 for(i in 2:ncol(Patterns)){
@@ -69,11 +73,11 @@ for(i in 2:ncol(Patterns)){
      
      
      # Calculate consumption scenario
-     Dresden <- CONSUMPTION(Dresden, Scenario, Scaler, s_Dresden)
-     Marseilles <- CONSUMPTION(Marseilles, Scenario, Scaler, s_Marseilles)
-     StarvedRock <- CONSUMPTION(StarvedRock, Scenario, Scaler, s_StarvedRock)
-     Peoria <- CONSUMPTION(Peoria, Scenario, Scaler, s_Peoria)
-     LaGrange <- CONSUMPTION(LaGrange, Scenario, Scaler, s_LaGrange)
+     Dresden <- CONSUMPTION(Dresden, Scenario, Scaler, s_Dresden, 482.8, I, price)
+     Marseilles <- CONSUMPTION(Marseilles, Scenario, Scaler, s_Marseilles, 458.5, I, price)
+     StarvedRock <- CONSUMPTION(StarvedRock, Scenario, Scaler, s_StarvedRock, 440.3, I, price)
+     Peoria <- CONSUMPTION(Peoria, Scenario, Scaler, s_Peoria, 430.0, I, price)
+     LaGrange <- CONSUMPTION(LaGrange, Scenario, Scaler, s_LaGrange, 419.6, I, price)
      
      
      # T test
@@ -90,6 +94,7 @@ for(i in 2:ncol(Patterns)){
      pf_StarvedRock <- P_FAIL(StarvedRock, s_StarvedRock, 440.3, Name)
      pf_Peoria <- P_FAIL(Peoria, s_Peoria, 430.0, Name)
      pf_LaGrange <- P_FAIL(LaGrange, s_LaGrange, 419.6, Name)
+     
      
      # Metrics output dataframes
      tTest[,colnames(Patterns)[i]] <- c(t_Dresden,t_Marseilles,t_StarvedRock,t_Peoria,t_LaGrange)

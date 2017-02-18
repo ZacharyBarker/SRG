@@ -12,7 +12,8 @@
 #
 ################################################################################
 
-CONSUMPTION <- function(df, scenario, scaler, slope){
+CONSUMPTION <- function(df, scenario, scaler, slope, criticalLevel, immersion, 
+                        price){
      
      # Format month as character
      scenario$Month <- as.character(scenario$Month)
@@ -21,6 +22,7 @@ CONSUMPTION <- function(df, scenario, scaler, slope){
      heading1 <- paste0(colnames(scenario)[2],"Consumption")
      heading2 <- paste0(colnames(scenario)[2],"Flow")
      heading3 <- paste0(colnames(scenario)[2],"Stage")
+     heading4 <- paste0(colnames(scenario)[2],"Cost")
      
      # Calculate consumption based on patterns
      df[,heading1] <- scenario[,2][match(df$Month, scenario$Month)]
@@ -33,6 +35,10 @@ CONSUMPTION <- function(df, scenario, scaler, slope){
      
      # Calculate new stage
      df[,heading3] <- df$Stage-(df[,heading1]*slope)
+     
+     # Calculate revenue lost
+     cost <- (criticalLevel - df[,heading3]) * immersion * price
+     df[,heading4] <- ifelse(df[,heading3] >= criticalLevel, 0, cost)
      
      return(df)
 }
