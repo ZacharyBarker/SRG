@@ -26,9 +26,9 @@ source("Code/Patterns.R")
 # Initialize metrics output dataframes
 Gauge <- c("Dresden", "Marseilles", "StarvedRock", "Peoria", "LaGrange")
 Station <- c(271, 245, 231, 158, 80)
-tTest <- data.frame(Gauge, Station)
-pFail <- data.frame(Gauge, Station)
-rLost <- data.frame(Gauge, Station)
+tTestTemp <- data.frame(Gauge, Station)
+pFailTemp <- data.frame(Gauge, Station)
+rLostTemp <- data.frame(Gauge, Station)
 
 
 # Load, clean & format data
@@ -57,7 +57,6 @@ s_LaGrange <- RATING_CURVE("La Grange", LaGrange)
 # Load consumption patterns
 Patterns <- read.csv("Data/ConsumptionPatterns.csv", header = T)
 Scalers <- c(200, 500, 1000, 1500, 2000)
-# Scalers <- c(200)
 PLOT_PATTERNS(Patterns)
 
 ## TEMPORARY VARIABLE INITALIZATION
@@ -112,11 +111,27 @@ for(Scaler in Scalers) {
           c_LaGrange <- COST(LaGrange, Name)
           
           
-          # Metrics output dataframes
-          tTest[,Name] <- c(t_Dresden,t_Marseilles,t_StarvedRock,t_Peoria,t_LaGrange)
-          pFail[,Name] <- c(pf_Dresden,pf_Marseilles,pf_StarvedRock,pf_Peoria,pf_LaGrange)
-          rLost[,Name] <- c(c_Dresden,c_Marseilles,c_StarvedRock,c_Peoria,c_LaGrange)
+          # Metrics output temporary dataframes
+          tTestTemp$Scaler <- Scaler
+          tTestTemp[,colnames(Patterns)[i]] <- c(t_Dresden,t_Marseilles,t_StarvedRock,t_Peoria,t_LaGrange)
+          pFailTemp$Scaler <- Scaler
+          pFailTemp[,colnames(Patterns)[i]] <- c(pf_Dresden,pf_Marseilles,pf_StarvedRock,pf_Peoria,pf_LaGrange)
+          rLostTemp$Scaler <- Scaler
+          rLostTemp[,colnames(Patterns)[i]] <- c(c_Dresden,c_Marseilles,c_StarvedRock,c_Peoria,c_LaGrange)
      }
+     
+     #Populates the master output dataframes with that scalers runs
+     if(exists("tTest")) {
+          tTest <- rbind(tTest, tTestTemp)
+          pFail <- rbind(pFail, pFailTemp)
+          rLost <- rbind(rLost, rLostTemp)
+          
+     } else {
+          tTest <- tTestTemp
+          pFail <- pFailTemp
+          rLost <- rLostTemp
+     }
+     
 }
 
 
