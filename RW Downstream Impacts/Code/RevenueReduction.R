@@ -6,19 +6,21 @@
 #
 ################################################################################
 
-COST <- function(df, immersion, price) {
+COST <- function(df, immersion, scenario, price, criticalLevel) {
      
-     # Creates a new column for revenue lost
-          
-          # For each time step (row):
-          
-          # Check if stage is lower than critical level
-          
-               # if not lower 
-                    # revenue lost = 0
-          
-               # if is lower:
-                    # (critical level - stage) * immersion factor * price
+     # Heading titles
+     heading1 <- paste0(colnames(scenario)[2],"Stage")
+     heading2 <- paste0(colnames(scenario)[2],"Cost")
+     
+     # Calculation of cost depends on critical level
+     if (df[,heading1] >= criticalLevel) {
+          df[,heading2] <- 0
+     } else if (df[,heading1] < criticalLevel) {
+          deltaL <- criticalLevel - df[,heading1]
+          df[,heading2] <- deltaL * immersion * price
+     } else {
+          df[,heading2] <- NULL
+     }
   
      return(df)
 }
