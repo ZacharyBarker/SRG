@@ -33,4 +33,28 @@ COST <- function(df, name) {
      return(total/(length(df[,heading1])/365.25))
 }
 
-# Plot 
+# Plot
+PLOT_METRICS <- function(df, metric){
+     
+     # Reshape to plot
+     dd <- melt(df, id=c("Gauge", "Station", "Scaler"))
+     
+     yLabel <- "Revenue Lost ($)"
+     
+     p <- ggplot(dd) + geom_line(aes(x=Station, y=value, colour=variable)) +
+          facet_grid(.~Scaler)+
+          theme_bw()+
+          xlab("Station (River Miles from Mississippi River)")+
+          ylab(yLabel)+
+          ggtitle(metric)+
+          theme(legend.justification=c(1,1), 
+                legend.position=c(1,1),
+                legend.title=element_blank(), 
+                legend.background = element_rect(fill="transparent"),
+                plot.title = element_text(size = rel(2)),
+                axis.text = element_text(size = rel(1.2)),
+                axis.title = element_text(size = rel(1.5)),
+                legend.text = element_text(size = rel(1.5)))
+     
+     print(p)
+}

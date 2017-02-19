@@ -11,7 +11,7 @@ library("gdata")                                                                
 
      
 # Set working directory to main RW Downstream impacts folder
-# setwd("C:/Users/Zachary/Desktop/SRG/RW Downstream Impacts")
+setwd("C:/Users/Zachary/Desktop/SRG/RW Downstream Impacts")
 
 
 # Load user defined functions
