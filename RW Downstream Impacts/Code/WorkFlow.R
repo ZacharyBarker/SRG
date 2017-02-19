@@ -141,3 +141,8 @@ FDC("Marseilles", Marseilles)
 FDC("Starved Rock", StarvedRock)
 FDC("Peoria", Peoria)
 FDC("La Grange", LaGrange)
+
+# Plot metrics plot
+PLOT_TTEST(tTest)
+PLOT_PFAIL(pFail)
+PLOT_RLOST(rLost)
