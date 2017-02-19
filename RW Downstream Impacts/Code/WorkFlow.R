@@ -56,7 +56,7 @@ s_LaGrange <- RATING_CURVE("La Grange", LaGrange)
 
 # Load consumption patterns
 Patterns <- read.csv("Data/ConsumptionPatterns.csv", header = T)
-Scalers <- c(200, 500, 1000, 1500, 2000)
+Scalers <- c(0, 200, 500, 1000, 1500, 2000)
 PLOT_PATTERNS(Patterns)
 
 ## TEMPORARY VARIABLE INITALIZATION

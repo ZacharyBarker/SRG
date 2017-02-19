@@ -36,8 +36,11 @@ COST <- function(df, name) {
 # Plot
 PLOT_METRICS <- function(df, metric){
      
+     # Remove current 
+     dd <- df[ , !(names(df) %in% c("Current"))]
+     
      # Reshape to plot
-     dd <- melt(df, id=c("Gauge", "Station", "Scaler"))
+     dd <- melt(dd, id=c("Gauge", "Station", "Scaler"))
      
      yLabel <- "Revenue Lost ($)"
      
@@ -47,8 +50,8 @@ PLOT_METRICS <- function(df, metric){
           xlab("Station (River Miles from Mississippi River)")+
           ylab(yLabel)+
           ggtitle(metric)+
-          theme(legend.justification=c(1,1), 
-                legend.position=c(1,1),
+          theme(legend.justification=c(0,1), 
+                legend.position=c(0,1),
                 legend.title=element_blank(), 
                 legend.background = element_rect(fill="transparent"),
                 plot.title = element_text(size = rel(2)),
