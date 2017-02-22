@@ -71,17 +71,20 @@ PLOT_PFAIL <- function(df){
      dd <- melt(dd, id=c("Gauge", "Station", "Scaler"))
      
      # Plot
-     p <- ggplot(dd) + geom_line(aes(x=Station, y=value, colour=variable), size=1) +
+     p <- ggplot(dd, aes(x = factor(Gauge), y = value)) + geom_bar(stat = "identity") +
+     # p <- ggplot(dd) + geom_line(aes(x=Station, y=value, colour=variable), size=1) +
           facet_grid(.~Scaler)+
           theme_bw()+
-          xlab("Station (River Miles from Mississippi River)")+
+          xlab("Gauge")+
+          # xlab("Station (River Miles from Mississippi River)")+
           ylab("Probability of failure (%)")+
           ggtitle("Additional consumption average per day (MGD)")+
           theme(legend.justification=c(0,1), 
                 legend.position=c(0,1),
                 legend.title=element_blank(), 
                 legend.background = element_rect(fill="transparent"),
-                plot.title = element_text(size = rel(1.5)),
+                plot.title = element_text(size = rel(1.4)),
+                axis.text.x = element_text(angle = 90, hjust = 1),
                 axis.text = element_text(size = rel(1.2)),
                 axis.title = element_text(size = rel(1.5)),
                 legend.text = element_text(size = rel(1.5)))
@@ -99,18 +102,22 @@ PLOT_RLOST <- function(df){
      dd <- melt(dd, id=c("Gauge", "Station", "Scaler"))
      
      # Plot
-     p <- ggplot(dd) + geom_line(aes(x=Station, y=value, colour=variable), size=1) +
+     p <- ggplot(dd, aes(x = factor(Gauge), y = value)) + geom_bar(stat = "identity") +
+     # p <- ggplot(dd) + geom_line(aes(x=Station, y=value, colour=variable), size=1) +
           facet_grid(.~Scaler)+
           theme_bw()+
-          xlab("Station (River Miles from Mississippi River)")+
-          ylab("Revenue lost ($)")+
+          xlab("Gauge")+
+          # xlab("Station (River Miles from Mississippi River)")+
+          ylab("Revenue lost ($/year)")+
           ggtitle("Additional consumption average per day (MGD)")+
+          scale_y_continuous(labels = scales::dollar)+
           theme(legend.justification=c(0,1), 
                 legend.position=c(0,1),
                 legend.title=element_blank(), 
                 legend.background = element_rect(fill="transparent"),
                 plot.title = element_text(size = rel(1.5)),
                 axis.text = element_text(size = rel(1.2)),
+                axis.text.x = element_text(angle = 90, hjust = 1),
                 axis.title = element_text(size = rel(1.5)),
                 legend.text = element_text(size = rel(1.5)))
      

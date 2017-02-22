@@ -61,6 +61,7 @@ PLOT_PATTERNS(Patterns)
 
 ## TEMPORARY VARIABLE INITALIZATION
 I = 5
+# price = c(1800, 2000, 2200)
 price = 2000
 
 # Loop through consumption scaler
