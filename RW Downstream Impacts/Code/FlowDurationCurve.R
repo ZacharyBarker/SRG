@@ -40,14 +40,14 @@ FDC <- function(guage_name, df) {
      
      # Plot
      curve <- ggplot(dd) + geom_line(aes(x=value.1, y=value, colour=variable)) +
-          # scale_colour_manual(values=c("blue","red"), labels=c("Historical", "With Consumption"))+
+          # facet_grid(.~variable) +
           scale_y_log10()+
           theme_bw()+
           xlab("Exceedence Probability (%)")+
           ylab("Flow  (CFS) - Log Scale")+
           ggtitle(paste(guage_name, "Flow Duration Curve"))+
           theme(legend.justification=c(1,1), 
-                legend.position=c(1,1),
+                legend.position=c(1,0),
                 legend.title=element_blank(), 
                 legend.background = element_rect(fill="transparent"),
                 plot.title = element_text(size = rel(2)),
