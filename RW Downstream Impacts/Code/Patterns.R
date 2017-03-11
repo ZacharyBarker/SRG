@@ -29,6 +29,7 @@ PLOT_PATTERNS <- function(df){
                 legend.background = element_rect(fill="transparent"),
                 plot.title = element_text(size = rel(2)),
                 axis.text = element_text(size = rel(1.2)),
+                axis.text.x = element_text(angle = 90, hjust = 1),
                 axis.title = element_text(size = rel(1.5)),
                 legend.text = element_text(size = rel(1.5)))
      

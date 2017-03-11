@@ -47,7 +47,7 @@ FDC <- function(guage_name, df) {
           ylab("Flow  (CFS) - Log Scale")+
           ggtitle(paste(guage_name, "Flow Duration Curve"))+
           theme(legend.justification=c(1,1), 
-                legend.position=c(1,0),
+                legend.position="right",
                 legend.title=element_blank(), 
                 legend.background = element_rect(fill="transparent"),
                 plot.title = element_text(size = rel(2)),

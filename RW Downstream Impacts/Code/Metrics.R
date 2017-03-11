@@ -27,8 +27,8 @@ P_FAIL <- function(df, slope, threshold, name){
 }
 
 # Total revenue lost for each scenario
-COST <- function(df, name) {
-     heading1 <- paste0(name, "Cost")
+COST <- function(df, name, quant) {
+     heading1 <- paste0(name, quant)
      total <- sum(df[,heading1], na.rm = T)
      return(total/(length(df[,heading1])/365.25))
 }
@@ -73,7 +73,7 @@ PLOT_PFAIL <- function(df){
      # Plot
      p <- ggplot(dd, aes(x = factor(Gauge), y = value)) + geom_bar(stat = "identity") +
      # p <- ggplot(dd) + geom_line(aes(x=Station, y=value, colour=variable), size=1) +
-          facet_grid(.~Scaler)+
+          facet_grid(variable~Scaler)+
           theme_bw()+
           xlab("Gauge")+
           # xlab("Station (River Miles from Mississippi River)")+
@@ -93,22 +93,31 @@ PLOT_PFAIL <- function(df){
 }
 
 # Plot revenue lost
-PLOT_RLOST <- function(df){
+PLOT_RLOST <- function(df, min, max){
      
      # Remove current 
      dd <- df[ , !(names(df) %in% c("Current"))]
+     min <- min[ , !(names(min) %in% c("Current"))]
+     max <- max[ , !(names(max) %in% c("Current"))]
      
      # Reshape to plot
      dd <- melt(dd, id=c("Gauge", "Station", "Scaler"))
      
+     # Add min and max to dd
+     min <- melt(min, id=c("Gauge", "Station", "Scaler"))
+     max <- melt(max, id=c("Gauge", "Station", "Scaler"))
+     dd$min <- min$value
+     dd$max <- max$value
+     
      # Plot
      p <- ggplot(dd, aes(x = factor(Gauge), y = value)) + geom_bar(stat = "identity") +
      # p <- ggplot(dd) + geom_line(aes(x=Station, y=value, colour=variable), size=1) +
-          facet_grid(.~Scaler)+
+          geom_linerange(aes(x = factor(Gauge), ymin = min, ymax = max), stat = "identity", size=1.5) + 
+          facet_grid(variable~Scaler)+
           theme_bw()+
           xlab("Gauge")+
           # xlab("Station (River Miles from Mississippi River)")+
-          ylab("Revenue lost ($/year)")+
+          ylab("Value lost ($/year)")+
           ggtitle("Additional consumption average per day (MGD)")+
           scale_y_continuous(labels = scales::dollar)+
           theme(legend.justification=c(0,1), 
@@ -122,4 +131,56 @@ PLOT_RLOST <- function(df){
                 legend.text = element_text(size = rel(1.5)))
      
      print(p)
+}
+
+# Plot revenue lost
+PLOT_NETRLOST <- function(df, min, max){
+     
+     # Calculate the net loss using the current scenario as baseline
+     scenarios <- ncol(df)
+     for(scenario in 5:scenarios){
+          df[,scenario] <- df[,scenario] - df[,"Current"]
+          min[,scenario] <- min[,scenario] - min[,"Current"]
+          max[,scenario] <- max[,scenario] - max[,"Current"]
+     }
+     df$Current <- 0
+     df2 <- df
+     
+     # Remove current 
+     dd <- df[ , !(names(df) %in% c("Current"))]
+     min <- min[ , !(names(min) %in% c("Current"))]
+     max <- max[ , !(names(max) %in% c("Current"))]
+     
+     # Reshape to plot
+     dd <- melt(dd, id=c("Gauge", "Station", "Scaler"))
+     
+     # Add min and max to dd
+     min <- melt(min, id=c("Gauge", "Station", "Scaler"))
+     max <- melt(max, id=c("Gauge", "Station", "Scaler"))
+     dd$min <- min$value
+     dd$max <- max$value
+     
+     # Plot
+     p <- ggplot(dd, aes(x = factor(Gauge), y = value)) + geom_bar(stat = "identity") +
+          # p <- ggplot(dd) + geom_line(aes(x=Station, y=value, colour=variable), size=1) +
+          geom_linerange(aes(x = factor(Gauge), ymin = min, ymax = max), stat = "identity", size=1.5) + 
+          facet_grid(variable~Scaler)+
+          theme_bw()+
+          xlab("Gauge")+
+          # xlab("Station (River Miles from Mississippi River)")+
+          ylab("Additional value lost ($/year)")+
+          ggtitle("Additional consumption average per day (MGD)")+
+          scale_y_continuous(labels = scales::dollar)+
+          theme(legend.justification=c(0,1), 
+                legend.position=c(0,1),
+                legend.title=element_blank(), 
+                legend.background = element_rect(fill="transparent"),
+                plot.title = element_text(size = rel(1.5)),
+                axis.text = element_text(size = rel(1.2)),
+                axis.text.x = element_text(angle = 90, hjust = 1),
+                axis.title = element_text(size = rel(1.5)),
+                legend.text = element_text(size = rel(1.5)))
+     
+     print(p)
+     return(df2)
 }
