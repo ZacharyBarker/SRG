@@ -79,6 +79,12 @@ PLOT_PFAIL <- function(df){
      # Remove current 
      dd <- df[ , !(names(df) %in% c("Current"))]
      
+     # Add MGD to scaler
+     dd$Scaler <- paste(dd$Scaler,"MGD")
+     
+     # Make the Scaler a factor to avoid sorting
+     dd$Scaler <- factor(dd$Scaler, levels = dd$Scaler)
+     
      # Reshape to plot
      dd <- melt(dd, id=c("Gauge", "Station", "Scaler"))
      
@@ -90,7 +96,7 @@ PLOT_PFAIL <- function(df){
           xlab("Gauge")+
           # xlab("Station (River Miles from Mississippi River)")+
           ylab("Probability of failure (%)")+
-          ggtitle("Additional consumption average per day (MGD)")+
+          ggtitle("Additional consumption average per day")+
           theme(legend.justification=c(0,1), 
                 legend.position=c(0,1),
                 legend.title=element_blank(), 
@@ -112,6 +118,12 @@ PLOT_RLOST <- function(df, min, max){
      min <- min[ , !(names(min) %in% c("Current"))]
      max <- max[ , !(names(max) %in% c("Current"))]
      
+     # Add MGD to scaler
+     dd$Scaler <- paste(dd$Scaler,"MGD")
+     
+     # Make the Scaler a factor to avoid sorting
+     dd$Scaler <- factor(dd$Scaler, levels = dd$Scaler)
+     
      # Reshape to plot
      dd <- melt(dd, id=c("Gauge", "Station", "Scaler"))
      
@@ -123,14 +135,12 @@ PLOT_RLOST <- function(df, min, max){
      
      # Plot
      p <- ggplot(dd, aes(x = factor(Gauge), y = value)) + geom_bar(stat = "identity") +
-     # p <- ggplot(dd) + geom_line(aes(x=Station, y=value, colour=variable), size=1) +
           geom_linerange(aes(x = factor(Gauge), ymin = min, ymax = max), stat = "identity", size=1.5) + 
           facet_grid(variable~Scaler)+
           theme_bw()+
           xlab("Gauge")+
-          # xlab("Station (River Miles from Mississippi River)")+
           ylab("Value lost ($/year)")+
-          ggtitle("Additional consumption average per day (MGD)")+
+          ggtitle("Additional consumption average per day")+
           scale_y_continuous(labels = scales::dollar)+
           theme(legend.justification=c(0,1), 
                 legend.position=c(0,1),
@@ -147,6 +157,12 @@ PLOT_RLOST <- function(df, min, max){
 
 # Plot revenue lost
 PLOT_NETRLOST <- function(df, min, max){
+     
+     # Add MGD to scaler
+     df$Scaler <- paste(df$Scaler,"MGD")
+     
+     # Make the Scaler a factor to avoid sorting
+     df$Scaler <- factor(df$Scaler, levels = df$Scaler)
      
      # Calculate the net loss using the current scenario as baseline
      scenarios <- ncol(df)
@@ -179,9 +195,8 @@ PLOT_NETRLOST <- function(df, min, max){
           facet_grid(variable~Scaler)+
           theme_bw()+
           xlab("Gauge")+
-          # xlab("Station (River Miles from Mississippi River)")+
           ylab("Additional value lost ($/year)")+
-          ggtitle("Additional consumption average per day (MGD)")+
+          ggtitle("Additional consumption average per day")+
           scale_y_continuous(labels = scales::dollar)+
           theme(legend.justification=c(0,1), 
                 legend.position=c(0,1),
