@@ -39,16 +39,28 @@ PLOT_TTEST <- function(df){
      # Remove current 
      dd <- df[ , !(names(df) %in% c("Current"))]
      
+     # Add MGD to scaler
+     dd$Scaler <- paste(dd$Scaler,"MGD")
+     
      # Reshape to plot
      dd <- melt(dd, id=c("Gauge", "Station", "Scaler"))
+     
+     # Make the Scaler a factor to avoid sorting
+     dd$Scaler <- factor(dd$Scaler, levels = dd$Scaler)
+     
+     # t Stat threshold
+     x <- c(0, 0)
+     y <- c(1.96, 1.96)
+     threshold <- data.frame(x, y)
      
      # Plot
      p <- ggplot(dd) + geom_line(aes(x=Station, y=value, colour=variable), size=1) +
           facet_grid(.~Scaler)+
+          geom_hline(data = threshold, aes(yintercept=y), linetype = "dashed", size=1)+
           theme_bw()+
           xlab("Station (River Miles from Mississippi River)")+
           ylab("t-statistic")+
-          ggtitle("Additional consumption average per day (MGD)")+
+          ggtitle("Additional consumption average per day")+
           theme(legend.justification=c(0,1), 
                 legend.position=c(0,1),
                 legend.title=element_blank(), 
