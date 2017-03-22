@@ -133,13 +133,18 @@ PLOT_RLOST <- function(df, min, max){
      dd$min <- min$value
      dd$max <- max$value
      
+     # Convert to 1000 of $
+     dd$value <- dd$value/1000
+     dd$min <- dd$min/1000
+     dd$max <- dd$max/1000
+     
      # Plot
      p <- ggplot(dd, aes(x = factor(Gauge), y = value)) + geom_bar(stat = "identity") +
           geom_errorbar(aes(x = factor(Gauge), ymin = min, ymax = max), stat = "identity", size = .75, width=0.25) + 
           facet_grid(variable~Scaler)+
           theme_bw()+
           xlab("Gauge")+
-          ylab("Value lost ($/year)")+
+          ylab("Value lost (thousand $/year)")+
           ggtitle("Additional consumption per day")+
           scale_y_continuous(labels = scales::dollar)+
           theme(legend.justification=c(0,1), 
@@ -188,13 +193,18 @@ PLOT_NETRLOST <- function(df, min, max){
      dd$min <- min$value
      dd$max <- max$value
      
+     # Convert to 1000 of $
+     dd$value <- dd$value/1000
+     dd$min <- dd$min/1000
+     dd$max <- dd$max/1000
+     
      # Plot
      p <- ggplot(dd, aes(x = factor(Gauge), y = value)) + geom_bar(stat = "identity") +
           geom_errorbar(aes(x = factor(Gauge), ymin = min, ymax = max), stat = "identity", size = .75, width=0.25) + 
           facet_grid(variable~Scaler)+
           theme_bw()+
           xlab("Gauge")+
-          ylab("Additional value lost ($/year)")+
+          ylab("Additional value lost (thousand $/year)")+
           ggtitle("Additional consumption per day")+
           scale_y_continuous(labels = scales::dollar)+
           theme(legend.justification=c(0,1), 

@@ -25,7 +25,7 @@ source("Code/Patterns.R")
 
 
 # Initialize metrics output dataframes
-Gauge <- c("Dresden", "Marseilles", "StarvedRock", "Peoria", "LaGrange")
+Gauge <- c("Dresden", "Marseilles", "Starved Rock", "Peoria", "La Grange")
 Station <- c(271, 245, 231, 158, 80)
 tTestTemp <- data.frame(Gauge, Station)
 pFailTemp <- data.frame(Gauge, Station)
