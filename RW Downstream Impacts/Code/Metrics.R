@@ -8,8 +8,18 @@
 
 # T test
 T_TEST <- function(df, name){
-     heading <- paste0(name,"Flow")
-     testResults <- t.test(df$Flow,df[,heading],var.equal = TRUE)
+     
+     # Create dataframe from columns needed
+     consumption <- paste0(name,"Consumption")
+     flow2 <- paste0(name,"Flow")
+     df2 <- data.frame(df$Flow, df[,flow2], df[,consumption])
+     
+     # Subset based on when there is actually consumption
+     df2 <- df2[consumption > 0,]
+     names(df2) <- c("Flow", "Flow2", "Consumption")
+     
+     # Perform t test
+     testResults <- t.test(df2$Flow,df2$Flow2,var.equal = TRUE)
      tStat <- testResults[["statistic"]][[1]] 
      return(tStat)
 }
