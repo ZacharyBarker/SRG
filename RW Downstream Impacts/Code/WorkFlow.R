@@ -11,8 +11,8 @@ library("gdata")                                                                
 
      
 # Set working directory to main RW Downstream impacts folder
-# setwd("C:/Users/Zachary/Desktop/SRG/RW Downstream Impacts")                   # personal machine
-setwd("C:/Users/Zachary.Barker/Desktop/SRG/RW Downstream Impacts")              # work machine
+setwd("C:/Users/Zachary/Desktop/SRG/RW Downstream Impacts")                   # personal machine
+# setwd("C:/Users/Zachary.Barker/Desktop/SRG/RW Downstream Impacts")              # work machine
 
 
 # Load user defined functions
