@@ -13,10 +13,10 @@ T_TEST <- function(df, name){
      consumption <- paste0(name,"Consumption")
      flow2 <- paste0(name,"Flow")
      df2 <- data.frame(df$Flow, df[,flow2], df[,consumption])
+     names(df2) <- c("Flow", "Flow2", "Consumption")
      
      # Subset based on when there is actually consumption
-     df2 <- df2[consumption > 0,]
-     names(df2) <- c("Flow", "Flow2", "Consumption")
+     df2 <- df2[df2$Consumption > 0,]
      
      # Perform t test
      testResults <- t.test(df2$Flow,df2$Flow2,var.equal = TRUE)
@@ -27,9 +27,20 @@ T_TEST <- function(df, name){
 
 # Probability of failure
 P_FAIL <- function(df, slope, threshold, name){
+     
+     # Create dataframe from columns needed
      heading1 <- paste0(name, "Consumption")
      heading2 <- paste0(name, "Stage")
-     stageWOna <- df[,heading2][!is.na(df[,heading2])]
+     df2 <- data.frame(df[,heading1], df[,heading2])
+     names(df2) <- c("Consumption", "Stage")
+     
+     # Subset based on when there is actually consumption
+     df2 <- df2[df2$Consumption > 0,]
+     
+     # Remove NAs
+     stageWOna <- df2$Stage[!is.na(df2$Stage)]
+     
+     # Calculate probability of failure
      countFail <- length(which(stageWOna<threshold))
      countLength <- length(stageWOna)
      pFailOut <- (countFail/countLength)*100
