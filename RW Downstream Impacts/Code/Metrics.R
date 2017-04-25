@@ -19,8 +19,12 @@ T_TEST <- function(df, name){
      df2 <- df2[df2$Consumption > 0,]
      
      # Perform t test
-     testResults <- t.test(df2$Flow,df2$Flow2,var.equal = TRUE)
-     tStat <- testResults[["statistic"]][[1]] 
+     if(nrow(df2) > 0){
+          testResults <- t.test(df2$Flow,df2$Flow2,var.equal = TRUE)
+          tStat <- testResults[["statistic"]][[1]] 
+     } else {
+          tStat <- 0
+     }
      return(tStat)
 }
 
@@ -41,9 +45,13 @@ P_FAIL <- function(df, slope, threshold, name){
      stageWOna <- df2$Stage[!is.na(df2$Stage)]
      
      # Calculate probability of failure
-     countFail <- length(which(stageWOna<threshold))
-     countLength <- length(stageWOna)
-     pFailOut <- (countFail/countLength)*100
+     if(nrow(df2) > 0){
+          countFail <- length(which(stageWOna<threshold))
+          countLength <- length(stageWOna)
+          pFailOut <- (countFail/countLength)*100
+     } else {
+          pFailOut <- 0
+     }
      return(pFailOut)
 }
 
