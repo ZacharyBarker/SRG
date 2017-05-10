@@ -3,6 +3,10 @@
 # Builds two flow duration curves from a data frame (date, stage, and flow) and 
 #    consumption; signifying the shift.
 #
+# Note: There are no labels on the plots. The top most bold line is the de facto 
+#         scenario (no consumption). The bottom bold line represents the worst
+#         case scenario (highest uniform consumption).
+#
 # Zac Barker, December 2016
 #
 ################################################################################
@@ -33,23 +37,37 @@ FDC <- function(guage_name, df) {
      exceedence <- df[grepl("Exceedence", names(df))]
      flow <- df[scenarios]
      
+     # Upper bound data (current)
+     ub <- data.frame(flow[,1], exceedence[,1])
+     colnames(ub) <- c("flow", "exceedence")
+     
+     # Lower bound data (Minimum total flow)
+     min <- colSums(flow, na.rm = T)
+     min <- data.frame(keyName=names(min), value=min, row.names=NULL)
+     min <- min[which(min$value == min(min$value, na.rm = TRUE)), ]
+     minName <- as.character(min$keyName[1])
+     minName <- substr(minName, 1, (nchar(minName)-4))
+     
+     minExceedence <- exceedence[,paste0(minName,"FlowExceedence")]
+     minFlow <- flow[,paste0(minName,"Flow")]
+     lb <- data.frame(minFlow, minExceedence)
+     
      # Reshape to plot
      exceedence <- melt(exceedence)
      flow <- melt(flow)
      dd <- data.frame(flow, exceedence)
      
      # Plot
-     curve <- ggplot(dd) + geom_line(aes(x=value.1, y=value, colour=variable)) +
-          # facet_grid(.~variable) +
+     curve <- ggplot(dd) + 
+          geom_line(aes(x=value.1, y=value, colour=variable)) +
+          geom_line(data = ub, aes(x = exceedence, y = flow), size = 1) + 
+          geom_line(data = lb, aes(x = minExceedence, y = minFlow), size = 1) + 
           scale_y_log10()+
           theme_bw()+
           xlab("Exceedence Probability (%)")+
           ylab("Flow  (CFS) - Log Scale")+
           ggtitle(paste(guage_name, "Flow Duration Curve"))+
-          theme(legend.justification=c(1,1), 
-                legend.position="right",
-                legend.title=element_blank(), 
-                legend.background = element_rect(fill="transparent"),
+          theme(legend.position="none",
                 plot.title = element_text(size = rel(2)),
                 axis.text = element_text(size = rel(1.2)),
                 axis.title = element_text(size = rel(1.5)),

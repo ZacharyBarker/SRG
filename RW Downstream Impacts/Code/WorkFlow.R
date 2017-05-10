@@ -8,8 +8,8 @@
 
 # Load necessary libraries
 library("gdata")                                                                # gdata must have perl library installed
-
      
+
 # Set working directory to main RW Downstream impacts folder
 setwd("C:/Users/Zachary/Desktop/SRG/RW Downstream Impacts")                   # personal machine
 # setwd("C:/Users/Zachary.Barker/Desktop/SRG/RW Downstream Impacts")              # work machine
