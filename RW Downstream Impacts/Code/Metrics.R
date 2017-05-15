@@ -124,7 +124,7 @@ PLOT_PFAIL <- function(df){
           theme_bw()+
           xlab("Gauge")+
           # xlab("Station (River Miles from Mississippi River)")+
-          ylab("Probability of failure (%)")+
+          ylab("Increase in probability of failure (%)")+
           ggtitle("Maximum consumption per day")+
           theme(legend.justification=c(0,1), 
                 legend.position=c(0,1),
@@ -233,7 +233,7 @@ PLOT_NETRLOST <- function(df, min, max){
           facet_grid(variable~Scaler)+
           theme_bw()+
           xlab("Gauge")+
-          ylab("Additional value lost (thousand $/year)")+
+          ylab("Increase of value lost (thousand $/year)")+
           ggtitle("Maximum consumption per day")+
           scale_y_continuous(labels = scales::dollar)+
           theme(legend.justification=c(0,1), 

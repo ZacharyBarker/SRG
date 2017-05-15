@@ -60,7 +60,7 @@ s_LaGrange <- RATING_CURVE("La Grange", LaGrange)
 # Load consumption patterns
 Patterns <- read.csv("Data/ConsumptionPatterns.csv", header = T)
 Scalers <- c(0, 200, 1000, 2000)
-PLOT_PATTERNS(Patterns)
+# PLOT_PATTERNS(Patterns)
 
 # Load values at each gauge
 Value <- read.csv("Data/ValuePerTon.csv")
