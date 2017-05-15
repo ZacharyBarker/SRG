@@ -6,6 +6,10 @@
 #
 ################################################################################
 
+# Clear global environment
+rm(list=ls())
+
+
 # Load necessary libraries
 library("gdata")                                                                # gdata must have perl library installed
      
@@ -66,8 +70,8 @@ Scalers <- c(0, 200, 1000, 2000)
 Value <- read.csv("Data/ValuePerTon.csv")
 
 ## TEMPORARY VARIABLE INITALIZATION
-I = 5
-price = 620
+I = 266
+#price = 620
 
 # Get price for each gauge
 v_Dresden <- c(Value[which(Value$Lock == "Dresden"),]$Average, 
