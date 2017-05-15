@@ -64,14 +64,15 @@ s_LaGrange <- RATING_CURVE("La Grange", LaGrange)
 # Load consumption patterns
 Patterns <- read.csv("Data/ConsumptionPatterns.csv", header = T)
 Scalers <- c(0, 200, 1000, 2000)
-# PLOT_PATTERNS(Patterns)
+
 
 # Load values at each gauge
 Value <- read.csv("Data/ValuePerTon.csv")
 
-## TEMPORARY VARIABLE INITALIZATION
+
+# Immersion factor, assuming 15 barges with dimensions 195' x 35'
 I = 266
-#price = 620
+
 
 # Get price for each gauge
 v_Dresden <- c(Value[which(Value$Lock == "Dresden"),]$Average, 
