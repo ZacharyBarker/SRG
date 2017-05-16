@@ -162,10 +162,10 @@ PLOT_RLOST <- function(df, min, max){
      dd$min <- min$value
      dd$max <- max$value
      
-     # Convert to 1000 of $
-     dd$value <- dd$value/1000
-     dd$min <- dd$min/1000
-     dd$max <- dd$max/1000
+     # Convert to millions of $
+     dd$value <- dd$value/1000000
+     dd$min <- dd$min/1000000
+     dd$max <- dd$max/1000000
      
      # Plot
      p <- ggplot(dd, aes(x = factor(Gauge), y = value)) + geom_bar(stat = "identity") +
@@ -222,10 +222,10 @@ PLOT_NETRLOST <- function(df, min, max){
      dd$min <- min$value
      dd$max <- max$value
      
-     # Convert to 1000 of $
-     dd$value <- dd$value/1000
-     dd$min <- dd$min/1000
-     dd$max <- dd$max/1000
+     # Convert to millions of $
+     dd$value <- dd$value/1000000
+     dd$min <- dd$min/1000000
+     dd$max <- dd$max/1000000
      
      # Plot
      p <- ggplot(dd, aes(x = factor(Gauge), y = value)) + geom_bar(stat = "identity") +
@@ -233,7 +233,7 @@ PLOT_NETRLOST <- function(df, min, max){
           facet_grid(variable~Scaler)+
           theme_bw()+
           xlab("Gauge")+
-          ylab("Increase of value lost (thousand $/year)")+
+          ylab("Increase of value lost (Million $/year)")+
           ggtitle("Maximum consumption per day")+
           scale_y_continuous(labels = scales::dollar)+
           theme(legend.justification=c(0,1), 
