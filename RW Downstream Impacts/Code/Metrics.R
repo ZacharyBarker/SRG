@@ -162,7 +162,7 @@ PLOT_RLOST <- function(df, min, max){
      dd$min <- min$value
      dd$max <- max$value
      
-     # Convert to millions of $
+     # Convert to millions of dollars
      dd$value <- dd$value/1000000
      dd$min <- dd$min/1000000
      dd$max <- dd$max/1000000
@@ -173,9 +173,8 @@ PLOT_RLOST <- function(df, min, max){
           facet_grid(variable~Scaler)+
           theme_bw()+
           xlab("Gauge")+
-          ylab("Value lost (thousand $/year)")+
+          ylab("Value lost (Million $/year)")+
           ggtitle("Maximum consumption per day")+
-          scale_y_continuous(labels = scales::dollar)+
           theme(legend.justification=c(0,1), 
                 legend.position=c(0,1),
                 legend.title=element_blank(), 
@@ -222,7 +221,7 @@ PLOT_NETRLOST <- function(df, min, max){
      dd$min <- min$value
      dd$max <- max$value
      
-     # Convert to millions of $
+     # Convert to millions of dollars
      dd$value <- dd$value/1000000
      dd$min <- dd$min/1000000
      dd$max <- dd$max/1000000
@@ -235,7 +234,6 @@ PLOT_NETRLOST <- function(df, min, max){
           xlab("Gauge")+
           ylab("Increase of value lost (Million $/year)")+
           ggtitle("Maximum consumption per day")+
-          scale_y_continuous(labels = scales::dollar)+
           theme(legend.justification=c(0,1), 
                 legend.position=c(0,1),
                 legend.title=element_blank(), 
