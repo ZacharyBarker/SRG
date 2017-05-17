@@ -37,7 +37,6 @@ rLostTemp <- data.frame(Gauge, Station)
 rMaxTemp <- data.frame(Gauge, Station)
 rMinTemp <- data.frame(Gauge, Station)
 
-
 # Load, clean & format data
 setwd("Data/Raw Data/")
 Dresden <- CLEAN("Dresden_Flow.xls", "Dresden_Stage.xls", 12)

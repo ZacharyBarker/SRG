@@ -68,6 +68,9 @@ PLOT_TTEST <- function(df){
      # Remove current 
      dd <- df[ , !(names(df) %in% c("Current"))]
      
+     # Remove 0 consumption
+     dd <- dd[!(dd$Scaler == 0),]
+     
      # Add MGD to scaler
      dd$Scaler <- paste(dd$Scaler,"MGD")
      
@@ -108,6 +111,9 @@ PLOT_PFAIL <- function(df){
      # Remove current 
      dd <- df[ , !(names(df) %in% c("Current"))]
      
+     # Remove 0 consumption
+     dd <- dd[!(dd$Scaler == 0),]
+     
      # Add MGD to scaler
      dd$Scaler <- paste(dd$Scaler,"MGD")
      
@@ -124,7 +130,7 @@ PLOT_PFAIL <- function(df){
           theme_bw()+
           xlab("Gauge")+
           # xlab("Station (River Miles from Mississippi River)")+
-          ylab("Increase in probability of failure (%)")+
+          ylab("Probability of failure (%)")+
           ggtitle("Maximum consumption per day")+
           theme(legend.justification=c(0,1), 
                 legend.position=c(0,1),
@@ -146,6 +152,11 @@ PLOT_RLOST <- function(df, min, max){
      dd <- df[ , !(names(df) %in% c("Current"))]
      min <- min[ , !(names(min) %in% c("Current"))]
      max <- max[ , !(names(max) %in% c("Current"))]
+     
+     # Remove 0 consumption
+     dd <- dd[!(dd$Scaler == 0),]
+     min <- min[!(min$Scaler == 0),]
+     max <- max[!(max$Scaler == 0),]
      
      # Add MGD to scaler
      dd$Scaler <- paste(dd$Scaler,"MGD")
@@ -190,6 +201,11 @@ PLOT_RLOST <- function(df, min, max){
 
 # Plot revenue lost
 PLOT_NETRLOST <- function(df, min, max){
+     
+     # Remove 0 consumption
+     df <- df[!(df$Scaler == 0),]
+     min <- min[!(min$Scaler == 0),]
+     max <- max[!(max$Scaler == 0),]
      
      # Add MGD to scaler
      df$Scaler <- paste(df$Scaler,"MGD")
